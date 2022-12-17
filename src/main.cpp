@@ -219,65 +219,19 @@ int main(void)
    
    result = pVAOManager->setIslandModelFlag("water", true);
 
-   result = pVAOManager->setTexture("boss", "Beholder_Base_color.bmp", 0);
-   //result = pVAOManager->setTextureRatio("floor", 1, 1);
+   result = pVAOManager->setTexture("boss1", "Beholder_Base_color.bmp", 0);
+   result = pVAOManager->setTexture("boss2", "Beholder_Base_color.bmp", 0);
+   result = pVAOManager->setTexture("boss3", "Beholder_Base_color.bmp", 0);
+   result = pVAOManager->bindingChild("boss1_vision", "boss1");
+   result = pVAOManager->bindingChild("boss2_vision", "boss2");
+   result = pVAOManager->bindingChild("boss3_vision", "boss3");
 
 
-   // result = pVAOManager->setInstanceObjVisible("sphere01", true);
-    //result = pVAOManager->setInstanceObjRGB("traffic", glm::vec4(1.f, 1.f, 1.f, 1.f));
-    //result = pVAOManager->setInstanceObjSpecularPower("traffic", glm::vec4(1.0f, 1.0f, 1.0f, 1000.0f));
-    //result = pVAOManager->setInstanceObjScale("traffic", 2);
 
-    //result = pVAOManager->setInstanceObjRGB("skybox", glm::vec4(0.8f, 0.8f, 0.8f, 1.f));
-    //result = pVAOManager->setInstanceObjSpecularPower("skybox", glm::vec4(1.0f, 1.0f, 1.0f, 1000.0f));
-    //result = pVAOManager->setInstanceObjScale("skybox", 0.4);
+
     result = pVAOManager->setSkyBoxFlag("skybox",true);
 
-    /*result = pVAOManager->setInstanceObjRGB("building02", glm::vec4(1.f, 0.8f, 0.5f, 1.f));
-    result = pVAOManager->setInstanceObjSpecularPower("building02", glm::vec4(1.0f, 1.0f, 1.0f, 1000.0f));
-    result = pVAOManager->setInstanceObjScale("building02", 0.3);
 
-    result = pVAOManager->setInstanceObjRGB("building03", glm::vec4(0.1f, 0.1f, 1.f, 1.f));
-    result = pVAOManager->setInstanceObjSpecularPower("building03", glm::vec4(1.0f, 1.0f, 1.0f, 1000.0f));
-    result = pVAOManager->setInstanceObjScale("building03", 0.1);
-
-    result = pVAOManager->setInstanceObjRGB("Electricbox01", glm::vec4(1.f, 0.f, 1.f, 1.f));
-    result = pVAOManager->setInstanceObjSpecularPower("Electricbox01", glm::vec4(1.0f, 1.0f, 1.0f, 1000.0f));
-    result = pVAOManager->setInstanceObjScale("Electricbox01", 0.4);
-
-    result = pVAOManager->setInstanceObjRGB("mac01", glm::vec4(1.f, 0.f, 0.f, 1.f));
-    result = pVAOManager->setInstanceObjSpecularPower("mac01", glm::vec4(1.0f, 1.0f, 1.0f, 1000.0f));
-    result = pVAOManager->setInstanceObjScale("mac01", 1);
-
-    result = pVAOManager->setInstanceObjRGB("truck01", glm::vec4(0.65f, 0.45f, 0.f, 1.f));
-    result = pVAOManager->setInstanceObjSpecularPower("truck01", glm::vec4(1.0f, 1.0f, 1.0f, 1000.0f));
-    result = pVAOManager->setInstanceObjScale("truck01", 0.7);
-
-    result = pVAOManager->setInstanceObjRGB("road01", glm::vec4(1.f, 1.f, 1.f, 1.f));
-    result = pVAOManager->setInstanceObjSpecularPower("road01", glm::vec4(1.0f, 1.0f, 1.0f, 1000.0f));
-    result = pVAOManager->setInstanceObjScale("road01", 2);
-
-    result = pVAOManager->setInstanceObjRGB("road02", glm::vec4(1.f, 1.f, 1.f, 1.f));
-    result = pVAOManager->setInstanceObjSpecularPower("road02", glm::vec4(1.0f, 1.0f, 1.0f, 1000.0f));
-    result = pVAOManager->setInstanceObjScale("road02", 2);
-
-    result = pVAOManager->setInstanceObjRGB("lamp01", glm::vec4(1.f, 1.f, 1.f, 1.f));
-    result = pVAOManager->setInstanceObjSpecularPower("lamp01", glm::vec4(1.0f, 1.0f, 1.0f, 1000.0f));
-    result = pVAOManager->setInstanceObjScale("lamp01", 1.5);
-    result = pVAOManager->setInstanceObjRGB("lamp02", glm::vec4(1.f, 1.f, 1.f, 1.f));
-    result = pVAOManager->setInstanceObjSpecularPower("lamp02", glm::vec4(1.0f, 1.0f, 1.0f, 1000.0f));
-    result = pVAOManager->setInstanceObjScale("lamp02", 1.5);
-    result = pVAOManager->setInstanceObjRGB("lamp03", glm::vec4(1.f, 1.f, 1.f, 1.f));
-    result = pVAOManager->setInstanceObjSpecularPower("lamp03", glm::vec4(1.0f, 1.0f, 1.0f, 1000.0f));
-    result = pVAOManager->setInstanceObjScale("lamp03", 1.5);
-    result = pVAOManager->setInstanceObjRGB("lamp04", glm::vec4(1.f, 1.f, 1.f, 1.f));
-    result = pVAOManager->setInstanceObjSpecularPower("lamp04", glm::vec4(1.0f, 1.0f, 1.0f, 1000.0f));
-    result = pVAOManager->setInstanceObjScale("lamp04",1.5);*/
-
-    //result = pVAOManager->setInstanceObjVisible("light1", false);
-    //result = pVAOManager->setInstanceObjVisible("light2", false);
-    //result = pVAOManager->setInstanceObjVisible("light3", false);
-    //result = pVAOManager->setInstanceObjVisible("light4", false);
 
     light0Setup(); // Dir light
     light1Setup(pVAOManager);// torch
@@ -367,11 +321,34 @@ void updateInstanceObj(cShaderManager* pShaderManager, cVAOManager* pVAOManager,
             // Skip the rest of the loop
             continue;
         }
-        if (pCurrentMeshObject->instanceName == "boss")
+        if (pCurrentMeshObject->instanceName == "boss1")
         {
-            g_pTheLightManager->plight[7]->position = glm::vec4(pCurrentMeshObject->position, 1) + glm::vec4(-0.4f, 1.4f, 0, 0);
-            g_pTheLightManager->plight[8]->position = glm::vec4(pCurrentMeshObject->position, 1) + glm::vec4(0.7f, 1.2f, -0.3f, 0);
-            g_pTheLightManager->plight[9]->position = glm::vec4(pCurrentMeshObject->position, 1) + glm::vec4(-2.5f, -0.2f, 0, 0);
+            g_pTheLightManager->plight[7]->position = glm::vec4(pCurrentMeshObject->position, 1);
+            //g_pTheLightManager->plight[7]->direction.x =    g_pTheLightManager->plight[7]->direction.x * cos(pCurrentMeshObject->rotation.y) + 
+            //                                                g_pTheLightManager->plight[7]->direction.z * sin(pCurrentMeshObject->rotation.y);
+            //g_pTheLightManager->plight[7]->direction.z =    g_pTheLightManager->plight[7]->direction.x * sin(pCurrentMeshObject->rotation.y) +
+            //                                                g_pTheLightManager->plight[7]->direction.z * cos(pCurrentMeshObject->rotation.y);
+
+
+        }
+        if (pCurrentMeshObject->instanceName == "boss2")
+        {
+            g_pTheLightManager->plight[8]->position = glm::vec4(pCurrentMeshObject->position, 1);
+            //g_pTheLightManager->plight[8]->direction.x =    g_pTheLightManager->plight[8]->direction.x * cos(pCurrentMeshObject->rotation.y) +
+            //                                                g_pTheLightManager->plight[8]->direction.z * sin(pCurrentMeshObject->rotation.y);
+            //g_pTheLightManager->plight[8]->direction.z =    g_pTheLightManager->plight[8]->direction.x * sin(pCurrentMeshObject->rotation.y) +
+            //                                                g_pTheLightManager->plight[8]->direction.z * cos(pCurrentMeshObject->rotation.y);
+
+
+        }
+        if (pCurrentMeshObject->instanceName == "boss3")
+        {
+            g_pTheLightManager->plight[9]->position = glm::vec4(pCurrentMeshObject->position, 1);
+            //g_pTheLightManager->plight[9]->direction.x =    g_pTheLightManager->plight[9]->direction.x * cos(pCurrentMeshObject->rotation.y) +
+            //                                                g_pTheLightManager->plight[9]->direction.z * sin(pCurrentMeshObject->rotation.y);
+            //g_pTheLightManager->plight[9]->direction.z =    g_pTheLightManager->plight[9]->direction.x * sin(pCurrentMeshObject->rotation.y) +
+            //                                                g_pTheLightManager->plight[9]->direction.z * cos(pCurrentMeshObject->rotation.y);
+
 
         }
         if (pCurrentMeshObject->isIslandModel)
@@ -679,7 +656,7 @@ void light2Setup(cVAOManager* pVAOManager)
     ::g_pTheLightManager->plight[7]->diffuse = glm::vec4(2.0f, 0.f, 0.f, 1.0f);
     ::g_pTheLightManager->plight[7]->attenuation = glm::vec4(1.19f, 0.1f, 0.2f, 1.0f);
     ::g_pTheLightManager->plight[7]->type = cLight::LightType::LIGHT_SPOT;
-    ::g_pTheLightManager->plight[7]->direction = glm::vec4(-100.f, 0.f, 0.f, 1.0f);
+    ::g_pTheLightManager->plight[7]->direction = glm::vec4(0.f, 1.5f, -100.f, 1.0f);
     // inner and outer angles
     ::g_pTheLightManager->plight[7]->angle.x = 5.0f;     // Degrees
     ::g_pTheLightManager->plight[7]->angle.y = 5.0f;     // Degrees
@@ -689,7 +666,7 @@ void light2Setup(cVAOManager* pVAOManager)
     ::g_pTheLightManager->plight[8]->diffuse = glm::vec4(0.f, 1.f, 0.f, 1.0f);
     ::g_pTheLightManager->plight[8]->attenuation = glm::vec4(1.19f, 0.1f, 0.2f, 1.0f);
     ::g_pTheLightManager->plight[8]->type = cLight::LightType::LIGHT_SPOT;
-    ::g_pTheLightManager->plight[8]->direction = glm::vec4(100.f, -0.5f, 0.f, 1.0f);
+    ::g_pTheLightManager->plight[8]->direction = glm::vec4(0.f, 1.5f, -100.f, 1.0f);
     // inner and outer angles
     ::g_pTheLightManager->plight[8]->angle.x = 5.0f;     // Degrees
     ::g_pTheLightManager->plight[8]->angle.y = 5.0f;     // Degrees
@@ -699,7 +676,7 @@ void light2Setup(cVAOManager* pVAOManager)
     ::g_pTheLightManager->plight[9]->diffuse = glm::vec4(0.f, 0.f, 1.0f, 1.0f);
     ::g_pTheLightManager->plight[9]->attenuation = glm::vec4(1.19f, 0.1f, 0.2f, 1.0f);
     ::g_pTheLightManager->plight[9]->type = cLight::LightType::LIGHT_SPOT;
-    ::g_pTheLightManager->plight[9]->direction = glm::vec4(0.f, -0.5f, 100.f, 1.0f);
+    ::g_pTheLightManager->plight[9]->direction = glm::vec4(0.f, 1.5f, -100.f, 1.0f);
     // inner and outer angles
     ::g_pTheLightManager->plight[9]->angle.x = 5.0f;     // Degrees
     ::g_pTheLightManager->plight[9]->angle.y = 5.0f;     // Degrees
@@ -733,25 +710,25 @@ void light3Setup()
 
 void light4Setup()
 {
-    ::g_pTheLightManager->plight[8]->position = glm::vec4(11.9f, 0.4f, 5.f, 1.0f);
-    ::g_pTheLightManager->plight[8]->diffuse = glm::vec4(1.f, 1.f, 1.f, 1.0f);
-    ::g_pTheLightManager->plight[8]->attenuation = glm::vec4(0.19f, 0.003f, 0.072f, 1.0f);
-    ::g_pTheLightManager->plight[8]->type = cLight::LightType::LIGHT_SPOT;
-    ::g_pTheLightManager->plight[8]->direction = glm::vec4(0.07f, -0.5f, 1.0f, 1.0f);
-    // inner and outer angles    
-    ::g_pTheLightManager->plight[8]->angle.x = 10.0f;     // Degrees
-    ::g_pTheLightManager->plight[8]->angle.y = 20.0f;     // Degrees
-    ::g_pTheLightManager->plight[8]->turnON = 1;
+    //::g_pTheLightManager->plight[8]->position = glm::vec4(11.9f, 0.4f, 5.f, 1.0f);
+    //::g_pTheLightManager->plight[8]->diffuse = glm::vec4(1.f, 1.f, 1.f, 1.0f);
+    //::g_pTheLightManager->plight[8]->attenuation = glm::vec4(0.19f, 0.003f, 0.072f, 1.0f);
+    //::g_pTheLightManager->plight[8]->type = cLight::LightType::LIGHT_SPOT;
+    //::g_pTheLightManager->plight[8]->direction = glm::vec4(0.07f, -0.5f, 1.0f, 1.0f);
+    //// inner and outer angles    
+    //::g_pTheLightManager->plight[8]->angle.x = 10.0f;     // Degrees
+    //::g_pTheLightManager->plight[8]->angle.y = 20.0f;     // Degrees
+    //::g_pTheLightManager->plight[8]->turnON = 1;
 
-    ::g_pTheLightManager->plight[9]->position = glm::vec4(11.2f, 0.6f, 5.7f, 1.0f);
-    ::g_pTheLightManager->plight[9]->diffuse = glm::vec4(1.f, 1.f, 1.f, 1.0f);
-    ::g_pTheLightManager->plight[9]->attenuation = glm::vec4(0.19f, 0.003f, 0.072f, 1.0f);
-    ::g_pTheLightManager->plight[9]->type = cLight::LightType::LIGHT_SPOT;
-    ::g_pTheLightManager->plight[9]->direction = glm::vec4(0.07f, -0.5f, 1.0f, 1.0f);
-    // inner and outer angle
-    ::g_pTheLightManager->plight[9]->angle.x = 10.0f;     // Degrees
-    ::g_pTheLightManager->plight[9]->angle.y = 20.0f;     // Degrees
-    ::g_pTheLightManager->plight[9]->turnON = 1;
+    //::g_pTheLightManager->plight[9]->position = glm::vec4(11.2f, 0.6f, 5.7f, 1.0f);
+    //::g_pTheLightManager->plight[9]->diffuse = glm::vec4(1.f, 1.f, 1.f, 1.0f);
+    //::g_pTheLightManager->plight[9]->attenuation = glm::vec4(0.19f, 0.003f, 0.072f, 1.0f);
+    //::g_pTheLightManager->plight[9]->type = cLight::LightType::LIGHT_SPOT;
+    //::g_pTheLightManager->plight[9]->direction = glm::vec4(0.07f, -0.5f, 1.0f, 1.0f);
+    //// inner and outer angle
+    //::g_pTheLightManager->plight[9]->angle.x = 10.0f;     // Degrees
+    //::g_pTheLightManager->plight[9]->angle.y = 20.0f;     // Degrees
+    //::g_pTheLightManager->plight[9]->turnON = 1;
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)

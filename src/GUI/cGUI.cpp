@@ -65,44 +65,51 @@ bool cGUI::ImGUI_render()
             for (int i = 0; i < pVecInstanceMeshObj->size(); i++)
             {
                 cMeshObj* pCurrentMeshObject = pVecInstanceMeshObj->at(i);
-                //ImGui::Text(pCurrentMeshObject->instanceName.c_str());
-                if (ImGui::TreeNode((void*)(intptr_t)i, pCurrentMeshObject->instanceName.c_str()))
-                {
-                    ImGui::BeginGroup();
-                    ImGui::DragFloat("X pos##", &pCurrentMeshObject->position.x, 0.1f);
-                    ImGui::DragFloat("Y pos##", &pCurrentMeshObject->position.y, 0.1f);
-                    ImGui::DragFloat("Z pos##", &pCurrentMeshObject->position.z, 0.1f);
-                    ImGui::EndGroup();
-                    ImGui::NewLine();
-                    ImGui::BeginGroup();
-                    ImGui::DragFloat("X Rotate##", &pCurrentMeshObject->rotation.x, 0.1f);
-                    ImGui::DragFloat("Y Rotate##", &pCurrentMeshObject->rotation.y, 0.1f);
-                    ImGui::DragFloat("Z Rotate##", &pCurrentMeshObject->rotation.z, 0.1f);
-                    ImGui::EndGroup();
-                    ImGui::NewLine();
-                    ImGui::BeginGroup();
-                    ImGui::DragFloat("R ##", &pCurrentMeshObject->color_RGBA.r, 0.01f, 0.f, 1.f);
-                    ImGui::DragFloat("G ##", &pCurrentMeshObject->color_RGBA.g, 0.01f, 0.f, 1.f);
-                    ImGui::DragFloat("B ##", &pCurrentMeshObject->color_RGBA.b, 0.01f, 0.f, 1.f);
-                    ImGui::EndGroup();
-                    ImGui::NewLine();
-                    ImGui::BeginGroup();
-                    ImGui::DragFloat("powerR ##", &pCurrentMeshObject->specular_colour_and_power.r, 0.01f);
-                    ImGui::DragFloat("powerG ##", &pCurrentMeshObject->specular_colour_and_power.g, 0.01f);
-                    ImGui::DragFloat("powerB ##", &pCurrentMeshObject->specular_colour_and_power.b, 0.01f);
-                    ImGui::EndGroup();
-                    ImGui::NewLine();
-                    ImGui::DragFloat("scale##", &pCurrentMeshObject->scale, 0.1f, 0.f, 100.f);
-                    ImGui::Checkbox("wireframe##", &pCurrentMeshObject->isWireframe);
-                    ImGui::SameLine();
-                    ImGui::Checkbox("visible##", &pCurrentMeshObject->isVisible);
-                    //ImGui::Text(pCurrentMeshObject->instanceName.c_str());
-                    ImGui::TreePop();
-                }
 
-                //ImGui::SameLine();
-                //pCurrentMeshObject->position;
-                //ImGui::InputText("Pos.x",)
+                if ((pCurrentMeshObject->meshName != "floorA") && (pCurrentMeshObject->meshName != "floorB") && (pCurrentMeshObject->meshName != "floorC") &&
+                    (pCurrentMeshObject->meshName != "wall") && (pCurrentMeshObject->meshName != "door") && (pCurrentMeshObject->meshName != "skybox") && 
+                    (pCurrentMeshObject->meshName != "terrain") && (pCurrentMeshObject->meshName != "moon") && (pCurrentMeshObject->meshName != "torch") && 
+                    (pCurrentMeshObject->meshName != "flame") && (pCurrentMeshObject->meshName != "water"))
+                {
+                    //ImGui::Text(pCurrentMeshObject->instanceName.c_str());
+                    if (ImGui::TreeNode((void*)(intptr_t)i, pCurrentMeshObject->instanceName.c_str()))
+                    {
+                        ImGui::BeginGroup();
+                        ImGui::DragFloat("X pos##", &pCurrentMeshObject->position.x, 0.1f);
+                        ImGui::DragFloat("Y pos##", &pCurrentMeshObject->position.y, 0.1f);
+                        ImGui::DragFloat("Z pos##", &pCurrentMeshObject->position.z, 0.1f);
+                        ImGui::EndGroup();
+                        ImGui::NewLine();
+                        ImGui::BeginGroup();
+                        ImGui::DragFloat("X Rotate##", &pCurrentMeshObject->rotation.x, 0.1f);
+                        ImGui::DragFloat("Y Rotate##", &pCurrentMeshObject->rotation.y, 0.1f);
+                        ImGui::DragFloat("Z Rotate##", &pCurrentMeshObject->rotation.z, 0.1f);
+                        ImGui::EndGroup();
+                        ImGui::NewLine();
+                        ImGui::BeginGroup();
+                        ImGui::DragFloat("R ##", &pCurrentMeshObject->color_RGBA.r, 0.01f, 0.f, 1.f);
+                        ImGui::DragFloat("G ##", &pCurrentMeshObject->color_RGBA.g, 0.01f, 0.f, 1.f);
+                        ImGui::DragFloat("B ##", &pCurrentMeshObject->color_RGBA.b, 0.01f, 0.f, 1.f);
+                        ImGui::EndGroup();
+                        ImGui::NewLine();
+                        ImGui::BeginGroup();
+                        ImGui::DragFloat("powerR ##", &pCurrentMeshObject->specular_colour_and_power.r, 0.01f);
+                        ImGui::DragFloat("powerG ##", &pCurrentMeshObject->specular_colour_and_power.g, 0.01f);
+                        ImGui::DragFloat("powerB ##", &pCurrentMeshObject->specular_colour_and_power.b, 0.01f);
+                        ImGui::EndGroup();
+                        ImGui::NewLine();
+                        ImGui::DragFloat("scale##", &pCurrentMeshObject->scale, 0.1f, 0.f, 100.f);
+                        ImGui::Checkbox("wireframe##", &pCurrentMeshObject->isWireframe);
+                        ImGui::SameLine();
+                        ImGui::Checkbox("visible##", &pCurrentMeshObject->isVisible);
+                        //ImGui::Text(pCurrentMeshObject->instanceName.c_str());
+                        ImGui::TreePop();
+                    }
+
+                    //ImGui::SameLine();
+                    //pCurrentMeshObject->position;
+                    //ImGui::InputText("Pos.x",)
+                }
             }
             //ImGui::Text("test");
             //ImGui::EndChild();
