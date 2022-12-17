@@ -37,6 +37,12 @@
     <Filter Include="Texture">
       <UniqueIdentifier>{8fa132e7-31bc-4c8c-99a7-3efa17b65875}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Lua">
+      <UniqueIdentifier>{81fb913b-fe73-4241-8eaf-28adc9dc7fb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{21d68b3a-e123-4d12-9527-8d64a842cdb6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GUI\cGUI.cpp">
@@ -105,6 +111,12 @@
     <ClCompile Include="src\Texture\C24BitBMPpixel.cpp">
       <Filter>Texture</Filter>
     </ClCompile>
+    <ClCompile Include="src\GameObj\cGameObj.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Lua\cLuaBrain.cpp">
+      <Filter>Lua</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GUI\cGUI.h">
@@ -169,6 +181,12 @@
     </ClInclude>
     <ClInclude Include="src\Texture\C24BitBMPpixel.h">
       <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Lua\cLuaBrain.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObj\cGameObj.h">
+      <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
