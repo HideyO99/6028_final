@@ -27,7 +27,9 @@ public:
 	void RunScriptImmediately(std::string script);
 	// called "setObjectState" in lua
 	// Something like this: "setObjectState( 24, 0, 0, 0, 0, 0, 0 )"
-	static int Lua_UpdateObj( lua_State* L);
+	static int Lua_moveObj( lua_State* L);
+
+	static int Lua_rotateObj(lua_State* L);
 	// called "getObjectState" in lua
 	static int Lua_GetObjState(lua_State* L);
 	// Lua script name is "updateObjectName"

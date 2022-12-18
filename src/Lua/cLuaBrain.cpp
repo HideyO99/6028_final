@@ -9,8 +9,11 @@ cLuaBrain::cLuaBrain()
 
 	luaL_openlibs(this->m_pLuaState);
 
-	lua_pushcfunction(this->m_pLuaState, cLuaBrain::Lua_UpdateObj);
-	lua_setglobal(this->m_pLuaState, "setObjectState");
+	lua_pushcfunction(this->m_pLuaState, cLuaBrain::Lua_moveObj);
+	lua_setglobal(this->m_pLuaState, "setgoto");
+
+	lua_pushcfunction(this->m_pLuaState, cLuaBrain::Lua_rotateObj);
+	lua_setglobal(this->m_pLuaState, "setrotate");
 
 	lua_pushcfunction(this->m_pLuaState, cLuaBrain::Lua_GetObjState);
 	lua_setglobal(this->m_pLuaState, "getObjectState");
@@ -136,8 +139,8 @@ void cLuaBrain::RunScriptImmediately(std::string script)
 		lua_pop(this->m_pLuaState, 1);  /* pop error message from the stack */
 	}
 }
-
-int cLuaBrain::Lua_UpdateObj(lua_State* L)
+//cmd :  goto(id, x,z)
+int cLuaBrain::Lua_moveObj(lua_State* L)
 {
 	int objectID = (int)lua_tonumber(L, 1);	/* get argument */
 
@@ -154,16 +157,40 @@ int cLuaBrain::Lua_UpdateObj(lua_State* L)
 	// Object ID is valid
 
 	pGameObj->position.x = (float)lua_tonumber(L, 2);	/* get argument */
-	pGameObj->position.y = (float)lua_tonumber(L, 3);	/* get argument */
-	pGameObj->position.z = (float)lua_tonumber(L, 4);	/* get argument */
-	pGameObj->velocity.x = (float)lua_tonumber(L, 5);	/* get argument */
-	pGameObj->velocity.y = (float)lua_tonumber(L, 6);	/* get argument */
-	pGameObj->velocity.z = (float)lua_tonumber(L, 7);	/* get argument */
-
-
+	pGameObj->position.z = (float)lua_tonumber(L, 3);
+	//pGameObj->position.y = (float)lua_tonumber(L, 3);	/* get argument */
+	//pGameObj->position.z = (float)lua_tonumber(L, 4);	/* get argument */
+	//pGameObj->velocity.x = (float)lua_tonumber(L, 5);	/* get argument */
+	//pGameObj->velocity.y = (float)lua_tonumber(L, 6);	/* get argument */
+	//pGameObj->velocity.z = (float)lua_tonumber(L, 7);	/* get argument */
+	pGameObj->direction.x = pGameObj->position.x - pGameObj->pMeshObj->position.x;
+	pGameObj->direction.z = pGameObj->position.z - pGameObj->pMeshObj->position.z;
 	lua_pushboolean(L, true);	// index is OK
 
 	return 1;		// There were 7 things on the stack
+}
+
+int cLuaBrain::Lua_rotateObj(lua_State* L)
+{
+	int objectID = (int)lua_tonumber(L, 1);	/* get argument */
+
+	// Exist? 
+	cGameObj* pGameObj = cLuaBrain::m_findObjByID(objectID);
+
+	if (pGameObj == nullptr)
+	{	// No, it's invalid
+		lua_pushboolean(L, false);
+		// I pushed 1 thing on stack, so return 1;
+		return 1;
+	}
+
+	// Object ID is valid
+
+	pGameObj->rotation.y = (float)lua_tonumber(L, 2);	/* get argument */
+
+	lua_pushboolean(L, true);	// index is OK
+
+	return 1;		
 }
 
 int cLuaBrain::Lua_GetObjState(lua_State* L)

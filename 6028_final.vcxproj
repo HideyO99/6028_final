@@ -153,6 +153,12 @@
     <ClCompile Include="src\Lua\cLuaBrain.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MeshObj\cMeshObj.cpp" />
+    <ClCompile Include="src\Physic\cBoundingBox.cpp" />
+    <ClCompile Include="src\Physic\cObject.cpp" />
+    <ClCompile Include="src\Physic\cPhysicSystem.cpp" />
+    <ClCompile Include="src\Physic\cTriangle.cpp" />
+    <ClCompile Include="src\Physic\math.cpp" />
+    <ClCompile Include="src\Physic\Vector3.cpp" />
     <ClCompile Include="src\Shader\cShader.cpp" />
     <ClCompile Include="src\Shader\cShaderManager.cpp" />
     <ClCompile Include="src\Shader\cShaderProgram.cpp" />
@@ -182,6 +188,13 @@
     <ClInclude Include="src\Light\cLightManager.h" />
     <ClInclude Include="src\Lua\cLuaBrain.h" />
     <ClInclude Include="src\MeshObj\cMeshObj.h" />
+    <ClInclude Include="src\Physic\cBoundingBox.h" />
+    <ClInclude Include="src\Physic\cObject.h" />
+    <ClInclude Include="src\Physic\cPhysicSystem.h" />
+    <ClInclude Include="src\Physic\cTriangle.h" />
+    <ClInclude Include="src\Physic\math.h" />
+    <ClInclude Include="src\Physic\shape.h" />
+    <ClInclude Include="src\Physic\Vector3.h" />
     <ClInclude Include="src\Shader\cShaderManager.h" />
     <ClInclude Include="src\Texture\C24BitBMPpixel.h" />
     <ClInclude Include="src\Texture\cTextureFromBMP.h" />

@@ -56,7 +56,11 @@ const double FRAME_RATE = (double)1 / FRAMES_PER_SECOND;
 cLightManager* g_pTheLightManager = NULL;
 static GLFWwindow* window = nullptr;
 cTextureManager* g_pTextureManager = NULL;
-
+cLuaBrain* g_Brain = NULL;
+std::vector<std::string> cmdA, cmdB, cmdC;
+cGameObj* p_Beholder1;
+cGameObj* p_Beholder2;
+cGameObj* p_Beholder3;
 
 static void error_callback(int error, const char* description)
 {
@@ -72,10 +76,11 @@ void drawObj(cMeshObj* pCurrentMeshObject, glm::mat4x4 mat_PARENT_Model, cShader
 void light0Setup();
 void light1Setup(cVAOManager* pVAOManager);
 void light2Setup(cVAOManager* pVAOManager);
-void light3Setup();
-void light4Setup();
+//void light3Setup();
+//void light4Setup();
 
 void updateByFrameRate();
+void patrol(cGameObj* obj, std::vector<std::string> cmd);
 
 int main(void)
 {
@@ -235,21 +240,93 @@ int main(void)
     result = pVAOManager->bindingChild("boss3_vision", "boss3");
     result = pVAOManager->setSkyBoxFlag("skybox",true);
 
-    cLuaBrain* pBrain = new cLuaBrain();
+    ::g_Brain = new cLuaBrain();
     std::vector< cGameObj* > vec_pGOs;
-    cGameObj* p_Beholder1 = new cGameObj();
-    cGameObj* p_Beholder2 = new cGameObj();
-    cGameObj* p_Beholder3 = new cGameObj();
+    p_Beholder1 = new cGameObj();
+    p_Beholder2 = new cGameObj();
+    p_Beholder3 = new cGameObj();
+
+
+    p_Beholder1->pMeshObj = pVAOManager->findMeshObjAddr("boss1");
+    p_Beholder2->pMeshObj = pVAOManager->findMeshObjAddr("boss2");
+    p_Beholder3->pMeshObj = pVAOManager->findMeshObjAddr("boss3");
+
+    p_Beholder1->name = p_Beholder1->pMeshObj->instanceName;
+    p_Beholder2->name = p_Beholder2->pMeshObj->instanceName;
+    p_Beholder3->name = p_Beholder3->pMeshObj->instanceName;
+
+    p_Beholder1->position.y = p_Beholder1->pMeshObj->position.y;
+    p_Beholder2->position.y = p_Beholder2->pMeshObj->position.y;
+    p_Beholder3->position.y = p_Beholder3->pMeshObj->position.y;
 
     vec_pGOs.push_back(p_Beholder1);
     vec_pGOs.push_back(p_Beholder2);
     vec_pGOs.push_back(p_Beholder3);
 
+    ::g_Brain->SetObjVector(&vec_pGOs);
+    //////////////////////////////////////////////////////////
+    //                    script                            //
+    //////////////////////////////////////////////////////////
+    std::string s = "setgoto(50,12.5,-17.5)";
+    cmdA.push_back(s);
+    s = "setrotate(50,1.57)";
+    cmdA.push_back(s);
+    s = "setgoto(50,-17.5,-17.5)";
+    cmdA.push_back(s);
+    s = "setrotate(50,3.14)";
+    cmdA.push_back(s);
+    s = "setgoto(50,-17.5,12.5)";
+    cmdA.push_back(s);
+    s = "setrotate(50,4.71)";
+    cmdA.push_back(s);
+    s = "setgoto(50,12.5,12.5)";
+    cmdA.push_back(s);
+    s = "setrotate(50,6.28)";
+    cmdA.push_back(s);
+
+    s = "setgoto(51,-52.5,-47.5)";
+    cmdB.push_back(s);
+    s = "setrotate(51,1.57)";
+    cmdB.push_back(s);
+    s = "setgoto(51,-62.5,-47.5)";
+    cmdB.push_back(s);
+    s = "setrotate(51,3.14)";
+    cmdB.push_back(s);
+    s = "setgoto(51,-62.5,-32.5)";
+    cmdB.push_back(s);
+    s = "setrotate(51,4.71)";
+    cmdB.push_back(s);
+    s = "setgoto(51,-52.5,-32.5)";
+    cmdB.push_back(s);
+    s = "setrotate(51,6.28)";
+    cmdB.push_back(s);
+
+    s = "setgoto(52,62.5,-17.5)";
+    cmdC.push_back(s);
+    s = "setrotate(52,1.57)";
+    cmdC.push_back(s);
+    s = "setgoto(52,47.5,-17.5)";
+    cmdC.push_back(s);
+    s = "setrotate(52,3.14)";
+    cmdC.push_back(s);
+    s = "setgoto(52,47.5,-7.5)";
+    cmdC.push_back(s);
+    s = "setrotate(52,4.71)";
+    cmdC.push_back(s);
+    s = "setgoto(52,62.5,-7.5)";
+    cmdC.push_back(s);
+    s = "setrotate(52,6.28)";
+    cmdC.push_back(s);
+
+    /// //////////////////////////////////////////////////////
+    
+    g_Brain->RunScriptImmediately(cmdA[0]);
+    g_Brain->RunScriptImmediately(cmdB[0]);
+    g_Brain->RunScriptImmediately(cmdC[0]);
+
     light0Setup(); // Dir light
     light1Setup(pVAOManager);// torch
     light2Setup(pVAOManager); //beholder eye
-    //light3Setup();
-    //light4Setup();
 
     cTime::update();
 
@@ -310,6 +387,12 @@ int main(void)
 
     delete pVAOManager;
     delete pShaderManager;
+    delete g_Brain;
+    //delete p_Beholder1;
+    //delete p_Beholder2;
+    //delete p_Beholder3;
+    delete g_pTextureManager;
+    delete g_pTheLightManager;
 
     glfwTerminate();
     exit(EXIT_SUCCESS);
@@ -695,53 +778,7 @@ void light2Setup(cVAOManager* pVAOManager)
     ::g_pTheLightManager->plight[9]->turnON = 1;
 }
 
-void light3Setup()
-{
 
-    //::g_pTheLightManager->plight[6]->position = glm::vec4(15.6f, 0.6f, 8.7f, 1.0f);
-    //::g_pTheLightManager->plight[6]->diffuse = glm::vec4(0.8f, .50f, 0.4f, 1.0f);
-    //::g_pTheLightManager->plight[6]->attenuation = glm::vec4(0.19f, 0.003f, 0.072f, 1.0f);
-    //::g_pTheLightManager->plight[6]->type = cLight::LightType::LIGHT_SPOT;
-    //::g_pTheLightManager->plight[6]->direction = glm::vec4(0.07f, -0.5f, 1.0f, 1.0f);
-    //// inner and outer angles
-    //::g_pTheLightManager->plight[6]->angle.x = 10.0f;     // Degrees
-    //::g_pTheLightManager->plight[6]->angle.y = 20.0f;     // Degrees
-    //::g_pTheLightManager->plight[6]->turnON = 1;
-
-    //::g_pTheLightManager->plight[7]->position = glm::vec4(15.0f, 0.6f, 9.5f, 1.0f);
-    //::g_pTheLightManager->plight[7]->diffuse = glm::vec4(0.8f, .50f, 0.4f, 1.0f);
-    //::g_pTheLightManager->plight[7]->attenuation = glm::vec4(0.19f, 0.003f, 0.072f, 1.0f);
-    //::g_pTheLightManager->plight[7]->type = cLight::LightType::LIGHT_SPOT;
-    //::g_pTheLightManager->plight[7]->direction = glm::vec4(0.07f, -0.5f, 1.0f, 1.0f);
-    //// inner and outer angles
-    //::g_pTheLightManager->plight[7]->angle.x = 10.0f;     // Degrees
-    //::g_pTheLightManager->plight[7]->angle.y = 20.0f;     // Degrees
-    //::g_pTheLightManager->plight[7]->turnON = 1;
-
-}
-
-void light4Setup()
-{
-    //::g_pTheLightManager->plight[8]->position = glm::vec4(11.9f, 0.4f, 5.f, 1.0f);
-    //::g_pTheLightManager->plight[8]->diffuse = glm::vec4(1.f, 1.f, 1.f, 1.0f);
-    //::g_pTheLightManager->plight[8]->attenuation = glm::vec4(0.19f, 0.003f, 0.072f, 1.0f);
-    //::g_pTheLightManager->plight[8]->type = cLight::LightType::LIGHT_SPOT;
-    //::g_pTheLightManager->plight[8]->direction = glm::vec4(0.07f, -0.5f, 1.0f, 1.0f);
-    //// inner and outer angles    
-    //::g_pTheLightManager->plight[8]->angle.x = 10.0f;     // Degrees
-    //::g_pTheLightManager->plight[8]->angle.y = 20.0f;     // Degrees
-    //::g_pTheLightManager->plight[8]->turnON = 1;
-
-    //::g_pTheLightManager->plight[9]->position = glm::vec4(11.2f, 0.6f, 5.7f, 1.0f);
-    //::g_pTheLightManager->plight[9]->diffuse = glm::vec4(1.f, 1.f, 1.f, 1.0f);
-    //::g_pTheLightManager->plight[9]->attenuation = glm::vec4(0.19f, 0.003f, 0.072f, 1.0f);
-    //::g_pTheLightManager->plight[9]->type = cLight::LightType::LIGHT_SPOT;
-    //::g_pTheLightManager->plight[9]->direction = glm::vec4(0.07f, -0.5f, 1.0f, 1.0f);
-    //// inner and outer angle
-    //::g_pTheLightManager->plight[9]->angle.x = 10.0f;     // Degrees
-    //::g_pTheLightManager->plight[9]->angle.y = 20.0f;     // Degrees
-    //::g_pTheLightManager->plight[9]->turnON = 1;
-}
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
@@ -787,6 +824,15 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         //::g_cameraTarget = glm::vec3(5.0f, 0.0f, 0.0f);
         bIsWalkAround = !bIsWalkAround;
 
+    }
+    if (key == GLFW_KEY_F6)
+    {
+        ::g_cameraEye.y += CAMERA_MOVE_SPEED;
+    }
+
+    if (key == GLFW_KEY_F7)
+    {
+        ::g_cameraEye.y -= CAMERA_MOVE_SPEED;
     }
 }
 
@@ -855,11 +901,10 @@ void updateByFrameRate()
         double elapsedTime = g_CurrentTime - g_LastCall;
         g_LastCall = g_CurrentTime;
 
-        //std::map<std::string, cGameObj*>::iterator obj_it = g_physicSys.mapOBJ.find("Player");
-        //obj_it->second->position = ::g_cameraEye;
-        //obj_it->second->update();
-
-        //g_physicSys.updateSystem(elapsedTime);
+        
+        patrol(p_Beholder1, cmdA);
+        patrol(p_Beholder2, cmdB);
+        patrol(p_Beholder3, cmdC);
     }
     if (g_CurrentTime >= g_LastCall5s + SEC_UPDATE)
     {
@@ -867,5 +912,47 @@ void updateByFrameRate()
         g_LastCall5s = g_CurrentTime;
 
         //g_physicSys.gameUpdate();
+    }
+}
+
+void patrol(cGameObj* obj,std::vector<std::string> cmd)
+{
+    if (obj->position != obj->pMeshObj->position)
+    {
+        if (abs(obj->position.x - obj->pMeshObj->position.x) > 0.1)
+        {
+            obj->pMeshObj->position.x += obj->direction.x * 0.01;
+        }
+        if (abs(obj->position.z - obj->pMeshObj->position.z) > 0.1)
+        {
+            obj->pMeshObj->position.z += obj->direction.z * 0.01;
+        }
+        if (abs(obj->position.x - obj->pMeshObj->position.x) < 0.1 && abs(obj->position.z - obj->pMeshObj->position.z) < 0.1)
+        {
+            obj->pMeshObj->position = obj->position;
+        }
+
+    }
+    else if (obj->rotation != obj->pMeshObj->rotation)
+    {
+        obj->pMeshObj->rotation.y += 0.1;
+        if (obj->rotation.y < obj->pMeshObj->rotation.y)
+        {
+            obj->pMeshObj->rotation = obj->rotation;
+            if (obj->pMeshObj->rotation.y >= 6.28)
+            {
+                obj->pMeshObj->rotation.y = 0;
+                obj->rotation.y = 0;
+            }
+        }
+        
+    }
+    else
+    {
+        g_Brain->RunScriptImmediately(cmd[obj->cmdIndex]);
+        if (++obj->cmdIndex == cmd.size())
+        {
+            obj->cmdIndex = 0;
+        }
     }
 }

@@ -43,6 +43,9 @@
     <Filter Include="Game">
       <UniqueIdentifier>{21d68b3a-e123-4d12-9527-8d64a842cdb6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Physic">
+      <UniqueIdentifier>{3105546b-c6c6-4b9d-beff-30a7d1ddd751}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GUI\cGUI.cpp">
@@ -121,7 +124,25 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\GameObj\cGameManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physic\cBoundingBox.cpp">
+      <Filter>Physic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physic\cObject.cpp">
+      <Filter>Physic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physic\cPhysicSystem.cpp">
+      <Filter>Physic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physic\cTriangle.cpp">
+      <Filter>Physic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physic\math.cpp">
+      <Filter>Physic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physic\Vector3.cpp">
+      <Filter>Physic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -198,7 +219,28 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObj\cGameManager.h">
-      <Filter>Header Files</Filter>
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physic\cBoundingBox.h">
+      <Filter>Physic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physic\cObject.h">
+      <Filter>Physic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physic\cPhysicSystem.h">
+      <Filter>Physic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physic\cTriangle.h">
+      <Filter>Physic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physic\math.h">
+      <Filter>Physic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physic\shape.h">
+      <Filter>Physic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physic\Vector3.h">
+      <Filter>Physic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
