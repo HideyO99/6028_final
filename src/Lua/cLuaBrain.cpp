@@ -21,6 +21,8 @@ cLuaBrain::cLuaBrain()
 	lua_pushcfunction(this->m_pLuaState, cLuaBrain::Lua_UpdateObjName);
 	lua_setglobal(this->m_pLuaState, "updateObjectName");
 
+	lua_pushcfunction(this->m_pLuaState, cLuaBrain::Lua_DeathScene);
+	lua_setglobal(this->m_pLuaState, "deathscene");
 
 	return;
 }
@@ -246,6 +248,25 @@ int cLuaBrain::Lua_UpdateObjName(lua_State* L)
 
 	pGameObj->name = strNewName;
 
+	return 0;
+}
+
+int cLuaBrain::Lua_DeathScene(lua_State* L)
+{
+	int objectID = (int)lua_tonumber(L, 1);	/* get argument */
+
+	// Exist? 
+	cGameObj* pGameObj = cLuaBrain::m_findObjByID(objectID);
+
+	if (pGameObj == nullptr)
+	{	// No, it's invalid
+		lua_pushboolean(L, false);
+		//		lua_pushstring(L, "Didn't work. So sorry");
+				// I pushed 1 thing on stack, so return 1;
+		return 1;
+	}
+	pGameObj->rotation.y += 1.57;
+	pGameObj->scale *= 0.9;
 	return 0;
 }
 

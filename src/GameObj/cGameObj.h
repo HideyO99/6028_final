@@ -21,6 +21,7 @@ public:
 	glm::vec3 velocity;
 	glm::vec3 rotation;
 	glm::vec3 direction;
+	float scale;
 
 	cMeshObj* pMeshObj;
 

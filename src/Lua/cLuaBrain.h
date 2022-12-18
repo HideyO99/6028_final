@@ -35,7 +35,7 @@ public:
 	// Lua script name is "updateObjectName"
 // Example: updateObjectName( ID, newName )
 	static int Lua_UpdateObjName(lua_State* L);
-
+	static int Lua_DeathScene(lua_State* L);
 
 private:
 	std::map<std::string, std::string> m_mapScript; //<name,source>

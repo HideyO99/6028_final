@@ -781,7 +781,7 @@ void light2Setup(cVAOManager* pVAOManager)
 }
 
 
-
+bool deathEvent = false;
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
@@ -827,7 +827,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         bIsWalkAround = false;
 
     }
-    if (key == GLFW_KEY_F6)
+    if (key == GLFW_KEY_F6 && action == GLFW_RELEASE)
     {
         bIsWalkAround = true;
         
@@ -838,9 +838,33 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         }
     }
 
-    if (key == GLFW_KEY_F7)
+    if (key == GLFW_KEY_F7 && action == GLFW_RELEASE)
     {
-        ::g_cameraEye.y -= CAMERA_MOVE_SPEED;
+        cmdA.clear();
+        cmdB.clear();
+        cmdC.clear();
+        cmdA.push_back("setgoto(50,-2.5,  -2.5)");
+        cmdC.push_back("setgoto(52,  55, -12.5)");
+        cmdC.push_back("setrotate(52, 1.57)");
+        cmdC.push_back("setgoto(52,22.5, -12.5)");
+        cmdC.push_back("setrotate(52,3.14)");
+        cmdC.push_back("setgoto(52,22.5,  -2.5)");
+        cmdC.push_back("setrotate(52,1.57)");
+        cmdC.push_back("setgoto(52,2.5,-2.5)");
+        cmdB.push_back("setgoto(51,-57.5,-40)");
+        cmdB.push_back("setrotate(51,3.14)");
+        cmdB.push_back("setgoto(51,-57.5,-22.5)");
+        cmdB.push_back("setrotate(51,4.71)");
+        cmdB.push_back("setgoto(51,-27.5,-22.5)");
+        cmdB.push_back("setrotate(51,3.14)");
+        cmdB.push_back("setgoto(51,-27.5,-2.5)");
+        cmdB.push_back("setrotate(51,4.71)");
+        cmdB.push_back("setgoto(51,-5,-2.5)");
+        p_Beholder1->cmdIndex = 0;
+        p_Beholder2->cmdIndex = 0;
+        p_Beholder3->cmdIndex = 0;
+
+        deathEvent = true;
     }
 }
 
@@ -933,6 +957,23 @@ void updateByFrameRate()
                 break;
             }
         }
+        //if (deathEvent)
+        //{
+        //   
+        //    if (p_Beholder1->position.x - p_Beholder3->position.x < 2.5)
+        //    {//{
+        //    //    cmdA.clear();
+        //    //    cmdB.clear();
+        //    //    //cmdC.clear();
+        //    //    cmdA.push_back("deathscene(50)");
+        //    //    cmdC.push_back("deathscene(52)");
+        //    //    p_Beholder1->cmdIndex = 0;
+        //    //    p_Beholder3->cmdIndex = 0;
+        //        cmdB.clear();
+        //        cmdB.push_back("setgoto(51,-5,-2.5)");
+        //        p_Beholder1->cmdIndex = 0;
+        //    }
+        //}
     }
     if (g_CurrentTime >= g_LastCall5s + SEC_UPDATE)
     {
@@ -984,4 +1025,9 @@ void patrol(cGameObj* obj,std::vector<std::string> cmd)
             obj->cmdIndex = 0;
         }
     }
+}
+
+void death(cGameObj* obj)
+{
+
 }
