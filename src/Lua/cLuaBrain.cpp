@@ -21,6 +21,7 @@ cLuaBrain::cLuaBrain()
 	lua_pushcfunction(this->m_pLuaState, cLuaBrain::Lua_UpdateObjName);
 	lua_setglobal(this->m_pLuaState, "updateObjectName");
 
+
 	return;
 }
 
@@ -247,6 +248,7 @@ int cLuaBrain::Lua_UpdateObjName(lua_State* L)
 
 	return 0;
 }
+
 
 cGameObj* cLuaBrain::m_findObjByID(int ID)
 {

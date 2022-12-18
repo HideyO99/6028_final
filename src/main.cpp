@@ -43,6 +43,7 @@ float pitch = 0.0f;
 float lastX = 1280.0f / 2.0;
 float lastY = 800.0 / 2.0;
 float fov = 45.0f;
+int toggle = 0;
 
 double g_LastCall;
 double g_LastCall5s;
@@ -245,7 +246,7 @@ int main(void)
     p_Beholder1 = new cGameObj();
     p_Beholder2 = new cGameObj();
     p_Beholder3 = new cGameObj();
-
+    //cGameObj* cam = new cGameObj();
 
     p_Beholder1->pMeshObj = pVAOManager->findMeshObjAddr("boss1");
     p_Beholder2->pMeshObj = pVAOManager->findMeshObjAddr("boss2");
@@ -262,10 +263,11 @@ int main(void)
     vec_pGOs.push_back(p_Beholder1);
     vec_pGOs.push_back(p_Beholder2);
     vec_pGOs.push_back(p_Beholder3);
+    //vec_pGOs.push_back(cam);
 
     ::g_Brain->SetObjVector(&vec_pGOs);
     //////////////////////////////////////////////////////////
-    //                    script                            //
+    //  temp script  -->must be improve by load from external file
     //////////////////////////////////////////////////////////
     std::string s = "setgoto(50,12.5,-17.5)";
     cmdA.push_back(s);
@@ -351,14 +353,14 @@ int main(void)
         //glm::vec3 upVector = glm::vec3(0.0f, 1.0f, 0.0f);
         glm::vec3 cameraDirection = glm::normalize(g_cameraEye - g_cameraTarget);
         glm::vec3 cameraRight = glm::normalize(glm::cross(g_upVector, cameraDirection));
-        if (!bIsWalkAround)
+        //if (!bIsWalkAround)
         {
 
             matView = glm::lookAt(::g_cameraEye, ::g_cameraTarget, ::g_upVector);
         }
-        else
+        //else
         {
-            matView = glm::lookAt(::g_cameraEye, ::g_cameraEye+::g_cameraFront, ::g_upVector);
+           // matView = glm::lookAt(::g_cameraEye, ::g_cameraEye+::g_cameraFront, ::g_upVector);
         }
         GLint eyeLocation_UniLoc = glGetUniformLocation(shaderID, "eyeLocation");
 
@@ -819,15 +821,21 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     }
     if (key == GLFW_KEY_SPACE && action == GLFW_RELEASE)
     {
-        //::g_cameraEye = glm::vec3(-5.5f, -3.4f, 15.0f);
+        ::g_cameraEye = glm::vec3(-18.f, 115.f, 145.0f);
         //::g_cameraEye = glm::vec3(0.0, 100.0, 300.0f);
-        //::g_cameraTarget = glm::vec3(5.0f, 0.0f, 0.0f);
-        bIsWalkAround = !bIsWalkAround;
+        g_cameraTarget = glm::vec3(-16.0f, 4.0f, 0.0f);
+        bIsWalkAround = false;
 
     }
     if (key == GLFW_KEY_F6)
     {
-        ::g_cameraEye.y += CAMERA_MOVE_SPEED;
+        bIsWalkAround = true;
+        
+        toggle++;
+        if (toggle > 3)
+        {
+            toggle = 1;
+        }
     }
 
     if (key == GLFW_KEY_F7)
@@ -851,29 +859,29 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
     {
 
 
-        float xoffset = xpos - lastX;
-        float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
-        lastX = xpos;
-        lastY = ypos;
+        //float xoffset = xpos - lastX;
+        //float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+        //lastX = xpos;
+        //lastY = ypos;
 
-        float sensitivity = 0.1f; // change this value to your liking
-        xoffset *= sensitivity;
-        yoffset *= sensitivity;
+        //float sensitivity = 0.1f; // change this value to your liking
+        //xoffset *= sensitivity;
+        //yoffset *= sensitivity;
 
-        yaw += xoffset;
-        pitch += yoffset;
+        //yaw += xoffset;
+        //pitch += yoffset;
 
-        // make sure that when pitch is out of bounds, screen doesn't get flipped
-        if (pitch > 89.0f)
-            pitch = 89.0f;
-        if (pitch < -89.0f)
-            pitch = -89.0f;
+        //// make sure that when pitch is out of bounds, screen doesn't get flipped
+        //if (pitch > 89.0f)
+        //    pitch = 89.0f;
+        //if (pitch < -89.0f)
+        //    pitch = -89.0f;
 
-        glm::vec3 front;
-        front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-        front.y = sin(glm::radians(pitch));
-        front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-        ::g_cameraFront = glm::normalize(front);
+        //glm::vec3 front;
+        //front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+        //front.y = sin(glm::radians(pitch));
+        //front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+        //::g_cameraFront = glm::normalize(front);
     }
     else
     {
@@ -905,6 +913,26 @@ void updateByFrameRate()
         patrol(p_Beholder1, cmdA);
         patrol(p_Beholder2, cmdB);
         patrol(p_Beholder3, cmdC);
+        if (bIsWalkAround)
+        {
+            switch (toggle)
+            {
+            case 1:
+                g_cameraEye+= (p_Beholder1->pMeshObj->position - g_cameraEye)* glm::vec3(0.1f)+glm::vec3(2,2,2) ;
+                g_cameraTarget = p_Beholder1->pMeshObj->position;
+                break;
+            case 2:
+                g_cameraEye += (p_Beholder2->pMeshObj->position - g_cameraEye) * glm::vec3(0.1f) + glm::vec3(2, 2, 2);
+                g_cameraTarget = p_Beholder2->pMeshObj->position;
+                break;
+            case 3:
+                g_cameraEye += (p_Beholder3->pMeshObj->position - g_cameraEye) * glm::vec3(0.1f) + glm::vec3(2, 2, 2);
+                g_cameraTarget = p_Beholder3->pMeshObj->position;
+                break;
+            default:
+                break;
+            }
+        }
     }
     if (g_CurrentTime >= g_LastCall5s + SEC_UPDATE)
     {
@@ -931,6 +959,7 @@ void patrol(cGameObj* obj,std::vector<std::string> cmd)
         {
             obj->pMeshObj->position = obj->position;
         }
+
 
     }
     else if (obj->rotation != obj->pMeshObj->rotation)
