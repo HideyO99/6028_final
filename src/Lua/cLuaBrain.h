@@ -19,12 +19,19 @@ public:
 
 	void LoadScript(std::string name, std::string source);
 	void DeleteScript(std::string name);
+	// Passes a pointer to the game object vector
 	void SetObjVector(std::vector<cGameObj*>* pvGameObj);
+	// Call all the active scripts that are loaded
 	void Update(float deltaTime);
 
 	void RunScriptImmediately(std::string script);
+	// called "setObjectState" in lua
+	// Something like this: "setObjectState( 24, 0, 0, 0, 0, 0, 0 )"
 	static int Lua_UpdateObj( lua_State* L);
+	// called "getObjectState" in lua
 	static int Lua_GetObjState(lua_State* L);
+	// Lua script name is "updateObjectName"
+// Example: updateObjectName( ID, newName )
 	static int Lua_UpdateObjName(lua_State* L);
 
 

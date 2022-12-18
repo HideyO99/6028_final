@@ -23,6 +23,9 @@
 #include "Light/cLightManager.h"
 #include "GUI/cGUI.h"
 #include "Texture/cTextureManager.h"
+#include "time.h"
+#include "GameObj/cGameObj.h"
+#include "Lua/cLuaBrain.h"
 
 #define MODEL_LIST_XML          "asset/model.xml"
 #define VERTEX_SHADER_FILE      "src/shader/vertexShader.glsl"
@@ -41,9 +44,17 @@ float lastX = 1280.0f / 2.0;
 float lastY = 800.0 / 2.0;
 float fov = 45.0f;
 
+double g_LastCall;
+double g_LastCall5s;
+double g_CurrentTime;
+
+const int FRAMES_PER_SECOND = 30;
+const double FRAME_RATE = (double)1 / FRAMES_PER_SECOND;
+
+#define SEC_UPDATE 5
+
 cLightManager* g_pTheLightManager = NULL;
 static GLFWwindow* window = nullptr;
-
 cTextureManager* g_pTextureManager = NULL;
 
 
@@ -63,6 +74,8 @@ void light1Setup(cVAOManager* pVAOManager);
 void light2Setup(cVAOManager* pVAOManager);
 void light3Setup();
 void light4Setup();
+
+void updateByFrameRate();
 
 int main(void)
 {
@@ -202,36 +215,35 @@ int main(void)
         std::cout << "ERROR: Didn't load the tropical sunny day cube map.->" << load_texture_error << std::endl;
     }
     //setup object
-    //result = pVAOManager->setInstanceObjVisible("terrain01", true);
-   // result = pVAOManager->setInstanceObjRGB("floor", glm::vec4(1.f,1.f,1.f,1.f));
-   // result = pVAOManager->setInstanceObjSpecularPower("floor", glm::vec4(1.0f, 1.0f, 1.0f, 1000.0f));
-   // //result = pVAOManager->setInstanceObjScale("terrain01", 20);
-   // result = pVAOManager->setUseRGBColorFlag("floor", false);
-   //result = pVAOManager->setTexture("floor", "Dungeons_2_Texture_01_A.bmp", 0);
-   result = pVAOManager->setDungeonTexture("floorA", "Dungeons_2_Texture_01_A.bmp");
-   result = pVAOManager->setTexture("moon", "lroc_color_poles_4k.bmp", 0);
-   result = pVAOManager->setInstanceObjPosition("moon", glm::vec4(200.f,200.f,-100.f,0.f));
-   result = pVAOManager->setInstanceObjScale("moon", 10);
-   result = pVAOManager->setInstanceObjLighting("moon", false);
-   result = pVAOManager->setTexture("water", "photos_2018_7_4_fst_water-blue.bmp", 0);
-   result = pVAOManager->setInstanceObjRGB("water", glm::vec4(1.f, 1.f, 1.f, 0.5f));
-   result = pVAOManager->setTorchTexture("flame", "glowing-fire-flame.bmp", "glowing-fire-flame_bw.bmp");
-   
-   result = pVAOManager->setIslandModelFlag("water", true);
 
-   result = pVAOManager->setTexture("boss1", "Beholder_Base_color.bmp", 0);
-   result = pVAOManager->setTexture("boss2", "Beholder_Base_color.bmp", 0);
-   result = pVAOManager->setTexture("boss3", "Beholder_Base_color.bmp", 0);
-   result = pVAOManager->bindingChild("boss1_vision", "boss1");
-   result = pVAOManager->bindingChild("boss2_vision", "boss2");
-   result = pVAOManager->bindingChild("boss3_vision", "boss3");
+    result = pVAOManager->setDungeonTexture("floorA", "Dungeons_2_Texture_01_A.bmp");
+    result = pVAOManager->setTexture("moon", "lroc_color_poles_4k.bmp", 0);
+    result = pVAOManager->setInstanceObjPosition("moon", glm::vec4(200.f,200.f,-100.f,0.f));
+    result = pVAOManager->setInstanceObjScale("moon", 10);
+    result = pVAOManager->setInstanceObjLighting("moon", false);
+    result = pVAOManager->setTexture("water", "photos_2018_7_4_fst_water-blue.bmp", 0);
+    result = pVAOManager->setInstanceObjRGB("water", glm::vec4(1.f, 1.f, 1.f, 0.5f));
+    result = pVAOManager->setTorchTexture("flame", "glowing-fire-flame.bmp", "glowing-fire-flame_bw.bmp");
+    
+    result = pVAOManager->setIslandModelFlag("water", true);
 
-
-
-
+    result = pVAOManager->setTexture("boss1", "Beholder_Base_color.bmp", 0);
+    result = pVAOManager->setTexture("boss2", "Beholder_Base_color.bmp", 0);
+    result = pVAOManager->setTexture("boss3", "Beholder_Base_color.bmp", 0);
+    result = pVAOManager->bindingChild("boss1_vision", "boss1");
+    result = pVAOManager->bindingChild("boss2_vision", "boss2");
+    result = pVAOManager->bindingChild("boss3_vision", "boss3");
     result = pVAOManager->setSkyBoxFlag("skybox",true);
 
+    cLuaBrain* pBrain = new cLuaBrain();
+    std::vector< cGameObj* > vec_pGOs;
+    cGameObj* p_Beholder1 = new cGameObj();
+    cGameObj* p_Beholder2 = new cGameObj();
+    cGameObj* p_Beholder3 = new cGameObj();
 
+    vec_pGOs.push_back(p_Beholder1);
+    vec_pGOs.push_back(p_Beholder2);
+    vec_pGOs.push_back(p_Beholder3);
 
     light0Setup(); // Dir light
     light1Setup(pVAOManager);// torch
@@ -239,7 +251,7 @@ int main(void)
     //light3Setup();
     //light4Setup();
 
-
+    cTime::update();
 
     while (!glfwWindowShouldClose(window))
     {
@@ -257,7 +269,7 @@ int main(void)
         glViewport(0, 0, width, height);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-       
+        updateByFrameRate();
 
         //glm::vec3 upVector = glm::vec3(0.0f, 1.0f, 0.0f);
         glm::vec3 cameraDirection = glm::normalize(g_cameraEye - g_cameraTarget);
@@ -832,3 +844,28 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
         fov = 45.0f;
 }
 
+void updateByFrameRate()
+{
+    cTime::update();
+    double deltaTime = cTime::getDeltaTime();
+    g_CurrentTime += deltaTime;
+
+    if (g_CurrentTime >= g_LastCall + FRAME_RATE)
+    {
+        double elapsedTime = g_CurrentTime - g_LastCall;
+        g_LastCall = g_CurrentTime;
+
+        //std::map<std::string, cGameObj*>::iterator obj_it = g_physicSys.mapOBJ.find("Player");
+        //obj_it->second->position = ::g_cameraEye;
+        //obj_it->second->update();
+
+        //g_physicSys.updateSystem(elapsedTime);
+    }
+    if (g_CurrentTime >= g_LastCall5s + SEC_UPDATE)
+    {
+        double elapsedTime = g_CurrentTime - g_LastCall5s;
+        g_LastCall5s = g_CurrentTime;
+
+        //g_physicSys.gameUpdate();
+    }
+}

@@ -144,6 +144,7 @@
     <ClCompile Include="dev\inc\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="dev\inc\imgui\imgui_tables.cpp" />
     <ClCompile Include="dev\inc\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="src\GameObj\cGameManager.cpp" />
     <ClCompile Include="src\GameObj\cGameObj.cpp" />
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\GUI\cGUI.cpp" />
@@ -158,6 +159,7 @@
     <ClCompile Include="src\Texture\C24BitBMPpixel.cpp" />
     <ClCompile Include="src\Texture\cTextureFromBMP.cpp" />
     <ClCompile Include="src\Texture\cTextureManager.cpp" />
+    <ClCompile Include="src\time.cpp" />
     <ClCompile Include="src\VAOManager\cModelDrawInfo.cpp" />
     <ClCompile Include="src\VAOManager\cVAOManager.cpp" />
     <ClCompile Include="src\XML\cXML.cpp" />
@@ -172,6 +174,7 @@
     <ClInclude Include="dev\inc\imgui\imstb_rectpack.h" />
     <ClInclude Include="dev\inc\imgui\imstb_textedit.h" />
     <ClInclude Include="dev\inc\imgui\imstb_truetype.h" />
+    <ClInclude Include="src\GameObj\cGameManager.h" />
     <ClInclude Include="src\GameObj\cGameObj.h" />
     <ClInclude Include="src\globalOpenGL.h" />
     <ClInclude Include="src\GUI\cGUI.h" />
@@ -183,6 +186,7 @@
     <ClInclude Include="src\Texture\C24BitBMPpixel.h" />
     <ClInclude Include="src\Texture\cTextureFromBMP.h" />
     <ClInclude Include="src\Texture\cTextureManager.h" />
+    <ClInclude Include="src\time.h" />
     <ClInclude Include="src\VAOManager\cModelDrawInfo.h" />
     <ClInclude Include="src\VAOManager\cVAOManager.h" />
     <ClInclude Include="src\XML\cXML.h" />

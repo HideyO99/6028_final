@@ -526,8 +526,8 @@
 	</model>
 	<model name="boss">asset/model/BeholderSketchfab_xyz_n_rgba_uv.ply
 		<modelInstance>boss1<posX>0</posX><posZ>0</posZ><rotateY>0</rotateY></modelInstance>
-		<modelInstance>boss2<posX>0</posX><posZ>0</posZ><rotateY>0</rotateY></modelInstance>
-		<modelInstance>boss3<posX>0</posX><posZ>0</posZ><rotateY>0</rotateY></modelInstance>
+		<modelInstance>boss2<posX>-57.5</posX><posZ>-40</posZ><rotateY>0</rotateY></modelInstance>
+		<modelInstance>boss3<posX>60</posX><posZ>-12.5</posZ><rotateY>0</rotateY></modelInstance>
 	</model>
 	<model name="boss_vision">asset/model/vision_cone.ply
 		<modelInstance>boss1_vision<posX>0</posX><posZ>0</posZ><rotateY>0</rotateY></modelInstance>
